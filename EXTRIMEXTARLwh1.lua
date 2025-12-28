@@ -141,7 +141,6 @@ local SPECIAL_BRAINROTS = {
 ['Reinito Sleighito'] = 0,
 ['Dragon Gingerini'] = 0,
 ['Festive 67'] = 0,
-['Money Money Reindeer'] = 0,
 ['Ginger Gerat'] = 0,
 ['Jolly Jolly Sahur'] = 0,
 ['Skibidi Tualet'] = 0,
