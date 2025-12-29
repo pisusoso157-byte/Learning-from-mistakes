@@ -6,9 +6,9 @@ local Workspace = game:GetService("Workspace")
 
 local localPlayer = Players.LocalPlayer
 
--- 🔒 VDS PASSWORD
-local VDS_PASSWORD = "gjg4jgj44fd3233"
-local VDS_URL = "http://95.81.99.228:3000"
+-- 🔒 VDS SEND PASSWORD (только для отправки)
+local VDS_SEND_PASSWORD = "send_gjg4jgj44fd3233"
+local VDS_URL = "https://auroranotifier.pro"
 
 -- 🔐 KONVEER JOBID ENCRYPTION (только для VDS)
 local SECRET = "KHE6HO65O6O50"
@@ -141,7 +141,6 @@ local SPECIAL_BRAINROTS = {
 ['Reinito Sleighito'] = 0,
 ['Dragon Gingerini'] = 0,
 ['Festive 67'] = 0,
-['Money Money Reindeer'] = 0,
 ['Ginger Gerat'] = 0,
 ['Jolly Jolly Sahur'] = 0,
 ['Skibidi Tualet'] = 0,
@@ -530,13 +529,13 @@ local function getRequester()
     return http_request or request or (syn and syn.request) or (fluxus and fluxus.request) or (KRNL_HTTP and KRNL_HTTP.request)
 end
 
--- 🔒 Кэш токена
+-- 🔒 Кэш токена для SEND
 local VDS_TOKEN_CACHE = {
     token = nil,
     expiresAt = 0
 }
 
--- 🔒 Получение токена с VDS (с кэшированием)
+-- 🔒 Получение SEND токена с VDS (с кэшированием)
 local function GetVDSToken()
     local req = getRequester()
     if not req then return nil end
@@ -547,13 +546,13 @@ local function GetVDSToken()
         return VDS_TOKEN_CACHE.token
     end
 
-    -- Получаем новый токен
+    -- Получаем новый SEND токен
     local success, response = pcall(function()
         return req({
-            Url = VDS_URL .. "/auth",
+            Url = VDS_URL .. "/auth/send",
             Method = "POST",
             Headers = {["Content-Type"] = "application/json"},
-            Body = HttpService:JSONEncode({password = VDS_PASSWORD})
+            Body = HttpService:JSONEncode({password = VDS_SEND_PASSWORD})
         })
     end)
 
@@ -566,7 +565,7 @@ local function GetVDSToken()
             VDS_TOKEN_CACHE.token = data.token
             VDS_TOKEN_CACHE.expiresAt = math.floor((data.expiresAt or (now * 1000 + 3600000)) / 1000)
 
-            print("🔑 New VDS token cached (scanner)")
+            print("🔑 New VDS SEND token cached (scanner)")
             return data.token
         end
     end
@@ -592,10 +591,10 @@ local function sendToVDS(filteredObjects, webhookConfig)
     if not req then return end
     if #filteredObjects == 0 then return end
 
-    -- 🔒 Получаем токен перед отправкой
+    -- 🔒 Получаем SEND токен перед отправкой
     local token = GetVDSToken()
     if not token then
-        warn("⚠️ Failed to get VDS token")
+        warn("⚠️ Failed to get VDS SEND token")
         return
     end
 
@@ -630,7 +629,8 @@ local function sendToVDS(filteredObjects, webhookConfig)
             Method = "POST",
             Headers = {
                 ["Content-Type"] = "application/json",
-                ["X-Aurora-Token"] = token -- 🔒 Токен в заголовке
+                ["X-Aurora-Token"] = token,
+                ["X-Aurora-Role"] = "send"  -- 🔒 Новая роль для отправки
             },
             Body = HttpService:JSONEncode(payload),
         })
@@ -791,7 +791,7 @@ local function scanAndNotify()
     end
 end
 
-print("🎯 BRAINROT SCANNER v2.3 🔒 LOADED (PASSWORD PROTECTED + JOBID ENCRYPTION)")
+print("🎯 BRAINROT SCANNER v2.3 🔒 LOADED (SEND PASSWORD PROTECTED + JOBID ENCRYPTION)")
 print("F - Rescan | G - Copy JobId")
 scanAndNotify()
 
