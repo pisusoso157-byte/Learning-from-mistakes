@@ -84,7 +84,7 @@ sendTeleport = false,
 showJoinerAd = true
 },
 { -- Special brainrots + overpay
-url = 'https://discord.com/api/webhooks/1454490244421259315/wpQdFzNME9WIlCp65GmB3jc3fuSZ6-U9-JwNA3JVkcoo_Eu5qARvMRvPChV5X15sLdK_',
+url = 'https://discord.com/api/webhooks/1454624672078630982/eqhtVZ9JOeJnnxVzWyubzrceo46OfCMGhJ4zhQLRt5aZJb9E7F63U2X8s7iKd4EoK-Rp',
 title = '⭐️ SPECIAL BRAINROTS',
 color = 0xff00ff,
 special = true,
